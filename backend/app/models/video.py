@@ -1,13 +1,13 @@
 from pydantic import BaseModel
 
 
-class Stream(BaseModel):
+class CameraStreamModel(BaseModel):
     id: int
-    url: str
+    rstp_url: str
 
 
-class GetStreamResponse(BaseModel):
-    streams: list[Stream]
+class CameraStreamListResponse(BaseModel):
+    streams: list[CameraStreamModel]
 
 
 class NewStreamRequest(BaseModel):

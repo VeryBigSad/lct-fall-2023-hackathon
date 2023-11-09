@@ -1,7 +1,8 @@
 from urllib import response
 from fastapi import APIRouter, UploadFile, HTTPException, status
+from database.models.stream import CameraStream
 
-from models.video import GetStreamResponse, NewStreamRequest, Stream
+from models.video import CameraStreamListResponse, NewStreamRequest, CameraStreamModel
 
 router = APIRouter()
 
@@ -12,7 +13,7 @@ async def upload_video(video: UploadFile):
     pass
 
 
-@router.post("/stream", status_code=status.HTTP_201_CREATED, response_model=Stream)
+@router.post("/stream", status_code=status.HTTP_201_CREATED, response_model=CameraStreamModel)
 async def add_new_stream(data: NewStreamRequest):
     """Add a new camera rtsp stream"""
     url = data.url
@@ -20,16 +21,18 @@ async def add_new_stream(data: NewStreamRequest):
         raise HTTPException(
             status_code=400, detail="Invalid RTSP URL, should start with rtsp://"
         )
+    # create new stream
+    camera_stream = await CameraStream.create(rtsp_url=data.url)
 
-    return {"id": 1, "url": url}
+    return camera_stream
 
 
-@router.get("/stream", status_code=status.HTTP_200_OK, response_model=GetStreamResponse)
+@router.get(
+    "/stream", status_code=status.HTTP_200_OK, response_model=CameraStreamListResponse
+)
 async def get_streams():
     """Get a list of all the streams (cameras and videos? or only cameras)"""
-    return {
-        "streams": [
-            {"id": 1, "url": "https://stream.net/stream-url-1"},
-            {"id": 2, "url": "https://stream.net/stream-url-2"},
-        ]
-    }
+    streams = await CameraStream.filter(is_active=True)
+    return CameraStreamListResponse(
+        streams=CameraStreamModel.model_validate(streams, from_attributes=True)
+    )

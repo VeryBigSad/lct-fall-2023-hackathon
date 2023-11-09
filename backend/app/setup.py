@@ -32,7 +32,7 @@ try:
 
     uvloop.install()
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-except Exception:
+except ImportError:
     pass
 
 server = create_app()

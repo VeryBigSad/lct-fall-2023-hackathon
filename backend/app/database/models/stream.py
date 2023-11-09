@@ -4,6 +4,7 @@ from tortoise.models import Model
 
 class UploadedVideo(Model):
     """Model of a video that was/is being processed"""
+
     id = fields.IntField(pk=True)
 
     # TODO: add more fields here, idk yet which ones exactly
@@ -14,8 +15,10 @@ class UploadedVideo(Model):
     class Meta:
         table = "uploaded_videos"
 
-class Camera(Model):
+
+class CameraStream(Model):
     """Camera, that needs to be proccessed"""
+
     id = fields.IntField(pk=True)
     rtsp_url = fields.CharField(max_length=4096)
     is_active = fields.BooleanField(default=True)
@@ -25,5 +28,3 @@ class Camera(Model):
 
     class Meta:
         table = "cameras"
-
-
