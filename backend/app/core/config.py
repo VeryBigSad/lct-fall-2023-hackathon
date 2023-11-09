@@ -28,6 +28,6 @@ class ConfigsValidator(
     APIConfigsModel,
     PostgresDataBaseConfigsModel,
     MetaConfigsModel,
-    MLServiceConfigsModel
+    MLServiceConfigsModel,
 ):
     pass

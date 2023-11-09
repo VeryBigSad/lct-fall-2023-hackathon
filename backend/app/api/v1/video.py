@@ -2,10 +2,12 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 
 router = APIRouter()
 
+
 @router.post("/upload")
-async def upload_video(video: UploadFile = File(...)):
+async def upload_video(video: UploadFile):
     # Your logic to save and process the video file goes here
     return {"filename": video.filename}
+
 
 @router.post("/stream")
 async def stream_video(rtspUrl: str):
@@ -13,4 +15,3 @@ async def stream_video(rtspUrl: str):
     if not rtspUrl.startswith("rtsp://"):
         raise HTTPException(status_code=400, detail="Invalid RTSP URL")
     return {"rtspUrl": rtspUrl}
-
