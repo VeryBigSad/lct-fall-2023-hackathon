@@ -1,8 +1,9 @@
 import uvicorn
 
-from settings import config_parameters
+from core.settings import config_parameters
 
-if __name__ == "__main__":
+
+def main():
     if config_parameters.IS_PROD:
         uvicorn.run(
             "setup:server",
@@ -21,3 +22,7 @@ if __name__ == "__main__":
             reload=True,
             use_colors=True,
         )
+
+
+if __name__ == "__main__":
+    main()
