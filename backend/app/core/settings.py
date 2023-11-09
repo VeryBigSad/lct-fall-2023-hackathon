@@ -5,7 +5,7 @@ import sys
 from dotenv import load_dotenv
 from pydantic import ValidationError
 
-from config import ConfigsValidator
+from core.config import ConfigsValidator
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 root_logger = logging.getLogger()

@@ -39,5 +39,5 @@ async def close_db():
     await Tortoise.close_connections()
 
 
-def init(server: FastAPI):
+def init_database(server: FastAPI):
     register_tortoise(server, config=tortoise_connection_config, generate_schemas=True)
