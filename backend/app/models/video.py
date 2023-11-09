@@ -1,14 +1,14 @@
-from pydantic import BaseClass
+from pydantic import BaseModel
 
 
-class Stream(BaseClass):
+class Stream(BaseModel):
     id: int
     url: str
 
 
-class GetStreamResponse(BaseClass):
+class GetStreamResponse(BaseModel):
     streams: list[Stream]
 
 
-class NewStreamRequest(BaseClass):
+class NewStreamRequest(BaseModel):
     url: str

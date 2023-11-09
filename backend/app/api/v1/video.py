@@ -12,7 +12,7 @@ async def upload_video(video: UploadFile):
     pass
 
 
-@router.post("/stream", status_code=status.HTTP_201_CREATED, response_class=Stream)
+@router.post("/stream", status_code=status.HTTP_201_CREATED, response_model=Stream)
 async def add_new_stream(data: NewStreamRequest):
     """Add a new camera rtsp stream"""
     url = data.url
@@ -24,7 +24,7 @@ async def add_new_stream(data: NewStreamRequest):
     return {"id": 1, "url": url}
 
 
-@router.get("/stream", response_class=GetStreamResponse, status_code=status.HTTP_200_OK)
+@router.get("/stream", status_code=status.HTTP_200_OK, response_model=GetStreamResponse)
 async def get_streams():
     """Get a list of all the streams (cameras and videos? or only cameras)"""
     return {

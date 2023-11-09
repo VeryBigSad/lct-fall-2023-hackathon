@@ -1,5 +1,5 @@
-from pydantic import BaseClass
+from pydantic import BaseModel
 
 
-class PingRequest(BaseClass):
+class PingRequest(BaseModel):
     url: str
