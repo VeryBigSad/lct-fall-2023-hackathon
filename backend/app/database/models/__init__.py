@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
 
-from database.models import *
+import database.models 
 from core.settings import config_parameters
 
 tortoise_credentials = {
