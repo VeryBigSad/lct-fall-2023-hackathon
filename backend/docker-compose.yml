@@ -4,6 +4,8 @@ services:
     build:
       context: .
     container_name: lct-hackathon-api
+    ports:
+      - "34069:8000"
     networks:
       - lct-hackathon-db-network
       - backend-network
