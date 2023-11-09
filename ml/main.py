@@ -1,18 +1,9 @@
-import os
 import cv2
-import random
 import torch
-from torch import nn
-import torchvision
-import torchvision.transforms as transforms
-import json
 from ultralytics import YOLO
 from PIL import Image
-import tqdm
 from catboost import CatBoostRegressor
-import pandas as pd
 from transformers import ViTImageProcessor, ViTForImageClassification
-import matplotlib.pyplot as plt
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -39,7 +30,6 @@ class WeaponDetectModel():
                 pred = self.model_cb.predict(outputs.logits.cpu().detach().numpy())
 
                 if pred > treshold:
-                    print(pred)
                     label = f'{round(float(pred), 2)} human_with_weapon'
                     color = (0, 0, 255)
                 else:
@@ -47,7 +37,7 @@ class WeaponDetectModel():
                     color = (255, 0, 0)
 
                 cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), color,
-                              3)  # (0, 255, 0) - цвет прямоугольника (здесь зеленый), 2 - толщина линии
+                              3)  # (0, 255, 0) - цвет прямоугольника (здесь зеленый), 3 - толщина линии
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 cv2.putText(frame, label, (int(x1), int(y1) - 10), font, 1.5, color, 2,
                             cv2.LINE_AA)  # (x1, y1 - 10) - координаты для текста, (0, 255, 0) - цвет текста
@@ -84,5 +74,19 @@ model_cb = CatBoostRegressor()
 model_cb.load_model("weights/cb_v1")
 
 model = WeaponDetectModel(model_people, model_vit, processor_vit, model_cb)
+
+# Предсказание с потока
+# cap = cv2.VideoCapture('rtsp://rtsp:Rtsp1234@188.170.176.190:8028/Streaming/Channels/101')
+
+# while(True):
+#     ret, frame = cap.read()
+#     frame = cv2.resize(frame, (1920, 1080))
+#     new_frame = model.predict_frame(frame)
+#     cv2.imshow('frame', frame)
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+#
+# cap.release()
+# cv2.destroyAllWindows()
 
 
