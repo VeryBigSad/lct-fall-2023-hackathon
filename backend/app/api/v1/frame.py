@@ -1,23 +1,14 @@
-from fastapi import APIRouter, HTTPException, UploadFile
+from fastapi import APIRouter, HTTPException, UploadFile, status
 
 router = APIRouter()
 
 
-@router.post("/save")
+@router.post("/save", status_code=status.HTTP_201_CREATED)
 async def save_frame(frame: UploadFile, contains_weapon: bool):
-    # Your logic to save the frame and process it for weapon detection goes here
-    # For example, you could save the frame to a file storage and then
-    # run your weapon detection algorithm
+    """Save a screenshot from a user specifying some having/not having gun in frame"""
     if not frame:
         raise HTTPException(status_code=400, detail="No frame provided")
-
-    # Process the frame and determine whether it contains a weapon
-    # Here you would integrate your weapon detection logic
-
-    # This is just a placeholder for the real implementation
-    weapon_detected = contains_weapon  # Replace with actual detection logic
-
-    return {"frame_name": frame.filename, "weapon_detected": weapon_detected}
+    
+    # TODO: save to database
 
 
-# You can add more endpoints related to frames as needed
