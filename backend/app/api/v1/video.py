@@ -7,13 +7,9 @@ from models.video import CameraStreamListResponse, NewStreamRequest, CameraStrea
 router = APIRouter()
 
 
-@router.post("/upload", status_code=status.HTTP_201_CREATED)
-async def upload_video(video: UploadFile):
-    """Upload a video to the server and proccess it to check for firearms"""
-    pass
-
-
-@router.post("/stream", status_code=status.HTTP_201_CREATED, response_model=CameraStreamModel)
+@router.post(
+    "/stream", status_code=status.HTTP_201_CREATED, response_model=CameraStreamModel
+)
 async def add_new_stream(data: NewStreamRequest):
     """Add a new camera rtsp stream"""
     url = data.url
@@ -36,3 +32,16 @@ async def get_streams():
     return CameraStreamListResponse(
         streams=CameraStreamModel.model_validate(streams, from_attributes=True)
     )
+
+
+@router.get("/stream/{stream_id}/")
+async def get_stream(stream_id: int):
+    """Returns a stream that can be put in <video> tag"""
+    pass
+
+
+
+@router.post("/upload", status_code=status.HTTP_201_CREATED)
+async def upload_video(video: UploadFile):
+    """Upload a video to the server and proccess it to check for firearms"""
+    pass
