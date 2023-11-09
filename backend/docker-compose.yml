@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+    container_name: lct-hackathon-api
+    networks:
+      - lct-hackathon-db-network
+      - backend-network
+
+networks:
+  lct-hackathon-db-network:
+    external: true
+
+  backend-network:
+    name: lct-hackathon-backend-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.206.0.0/16

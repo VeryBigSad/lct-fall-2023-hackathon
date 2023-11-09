@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  postgres:
+    build: .
+    container_name: lct-hackathon-postgres
+    restart: "always"
+    networks:
+      - database_network
+    env_file:
+      - .env
+    ports:
+      - "3004:5432"
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+
+networks:
+  database_network:
+    name: lct-hackathon-db-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.204.0.0/16
