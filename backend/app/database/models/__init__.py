@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
 
-import database.models 
+from database.models import * 
 from core.settings import config_parameters
 
 tortoise_credentials = {
@@ -23,7 +23,7 @@ tortoise_connection_config = {
     },
     "apps": {
         "models": {
-            "models": ["core.models.models", "aerich.models"],
+            "models": ["database.models"],
             "default_connection": "default",
         }
     },

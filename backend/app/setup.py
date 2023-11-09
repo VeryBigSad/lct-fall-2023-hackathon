@@ -5,16 +5,16 @@ from starlette.middleware.cors import CORSMiddleware
 
 from core.settings import config_parameters
 from database import init_database
-from api import router as root_router
+from api import root_api_router
 
 
 def create_app() -> FastAPI:
     app = FastAPI(
         title="MISIS Magnolia API",
         debug=not config_parameters.IS_PROD,
-        docs_url=None,
-        redoc_url=None,
-        openapi_url=None,
+        # docs_url=None,
+        # redoc_url=None,
+        # openapi_url=None,
     )
     app.add_middleware(
         CORSMiddleware,
@@ -34,6 +34,7 @@ try:
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 except Exception:
     pass
+
 server = create_app()
-server.include_router(root_router, prefix="/api")
+server.include_router(root_api_router, prefix="/api")
 init_database(server)
